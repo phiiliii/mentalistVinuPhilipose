@@ -1,0 +1,1986 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vinu Philipose — The Mind</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --midnight: #04070f;
+        --deep: #080d1a;
+        --navy: #0d1530;
+        --blue: #112040;
+        --silver: #c8d4e8;
+        --silver-dim: #7a90b0;
+        --silver-bright: #e8f0ff;
+        --gold: #c8a96e;
+        --gold-dim: #8a7040;
+        --glow-blue: rgba(80, 140, 255, 0.15);
+        --glow-silver: rgba(200, 212, 232, 0.12);
+      }
+
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--midnight);
+        color: var(--silver);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        cursor: none;
+        overflow-x: hidden;
+      }
+
+      /* ─── CUSTOM CURSOR ─── */
+      #cursor {
+        width: 12px;
+        height: 12px;
+        background: var(--silver-bright);
+        border-radius: 50%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: transform 0.08s ease, background 0.3s;
+        mix-blend-mode: difference;
+      }
+      #cursor-ring {
+        width: 36px;
+        height: 36px;
+        border: 1px solid rgba(200, 212, 232, 0.5);
+        border-radius: 50%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        transition: transform 0.18s ease, width 0.3s, height 0.3s,
+          border-color 0.3s;
+      }
+      body:hover #cursor-ring {
+        border-color: rgba(200, 212, 232, 0.5);
+      }
+
+      /* ─── STARS CANVAS ─── */
+      #stars-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* ─── NAV ─── */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.4rem 4rem;
+        background: linear-gradient(
+          to bottom,
+          rgba(4, 7, 15, 0.95),
+          transparent
+        );
+        backdrop-filter: blur(4px);
+        transition: padding 0.4s;
+      }
+      nav.scrolled {
+        padding: 0.8rem 4rem;
+        background: rgba(4, 7, 15, 0.97);
+        border-bottom: 1px solid rgba(200, 212, 232, 0.08);
+      }
+      .nav-logo {
+        font-family: "Cinzel", serif;
+        font-size: 1rem;
+        letter-spacing: 0.35em;
+        color: var(--silver-bright);
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+      .nav-logo span {
+        color: var(--gold);
+      }
+      .nav-links {
+        display: flex;
+        gap: 2.5rem;
+        list-style: none;
+      }
+      .nav-links a {
+        font-family: "Cinzel", serif;
+        font-size: 0.7rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--silver-dim);
+        text-decoration: none;
+        transition: color 0.3s;
+        position: relative;
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--gold);
+        transition: width 0.3s;
+      }
+      .nav-links a:hover {
+        color: var(--silver-bright);
+      }
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+      .nav-cta {
+        font-family: "Cinzel", serif;
+        font-size: 0.68rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--midnight);
+        background: var(--silver);
+        padding: 0.55rem 1.4rem;
+        border: none;
+        cursor: none;
+        text-decoration: none;
+        transition: background 0.3s, transform 0.2s;
+      }
+      .nav-cta:hover {
+        background: var(--silver-bright);
+        transform: scale(1.03);
+      }
+
+      /* ─── HAMBURGER (MOBILE) ─── */
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: none;
+        background: none;
+        border: none;
+        padding: 4px;
+      }
+      .hamburger span {
+        display: block;
+        width: 24px;
+        height: 1px;
+        background: var(--silver);
+        transition: all 0.3s;
+      }
+
+      /* ─── HERO ─── */
+      #hero {
+        position: relative;
+        z-index: 1;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 6rem 2rem 4rem;
+        overflow: hidden;
+      }
+      .hero-eyebrow {
+        font-family: "Cinzel", serif;
+        font-size: 0.68rem;
+        letter-spacing: 0.5em;
+        color: var(--gold);
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+        opacity: 0;
+        animation: fadeUp 1s 0.3s forwards;
+      }
+      .hero-title {
+        font-family: "Cinzel Decorative", serif;
+        font-size: clamp(4rem, 12vw, 10rem);
+        font-weight: 900;
+        line-height: 0.88;
+        color: transparent;
+        background: linear-gradient(
+          135deg,
+          #c8d4e8 0%,
+          #e8f0ff 40%,
+          #c8a96e 70%,
+          #c8d4e8 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        letter-spacing: -0.02em;
+        opacity: 0;
+        animation: fadeUp 1.2s 0.5s forwards;
+        filter: drop-shadow(0 0 60px rgba(80, 140, 255, 0.25));
+      }
+      .hero-sub {
+        font-family: "Cinzel Decorative", serif;
+        font-size: clamp(1.8rem, 5vw, 4rem);
+        font-weight: 400;
+        color: var(--gold);
+        letter-spacing: 0.15em;
+        margin-top: 0.4rem;
+        opacity: 0;
+        animation: fadeUp 1.2s 0.7s forwards;
+      }
+      .hero-tagline {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+        font-style: italic;
+        color: var(--silver-dim);
+        margin-top: 2rem;
+        max-width: 520px;
+        line-height: 1.7;
+        opacity: 0;
+        animation: fadeUp 1s 1s forwards;
+      }
+      .hero-tagline em {
+        color: var(--silver-bright);
+        font-style: normal;
+      }
+      .hero-cta-group {
+        display: flex;
+        gap: 1.2rem;
+        margin-top: 3rem;
+        opacity: 0;
+        animation: fadeUp 1s 1.2s forwards;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .btn-primary {
+        font-family: "Cinzel", serif;
+        font-size: 0.75rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--midnight);
+        background: linear-gradient(
+          135deg,
+          var(--silver),
+          var(--silver-bright)
+        );
+        padding: 1rem 2.5rem;
+        border: none;
+        cursor: none;
+        text-decoration: none;
+        transition: transform 0.3s, box-shadow 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+      .btn-primary::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+      .btn-primary:hover::before {
+        left: 100%;
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(200, 212, 232, 0.3);
+      }
+      .btn-secondary {
+        font-family: "Cinzel", serif;
+        font-size: 0.75rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--silver);
+        background: transparent;
+        padding: 1rem 2.5rem;
+        border: 1px solid rgba(200, 212, 232, 0.35);
+        cursor: none;
+        text-decoration: none;
+        transition: all 0.3s;
+      }
+      .btn-secondary:hover {
+        border-color: var(--silver);
+        background: rgba(200, 212, 232, 0.05);
+      }
+
+      /* Watch icon in hero */
+      .hero-watch {
+        position: absolute;
+        right: 6%;
+        top: 30%;
+        font-size: 5rem;
+        opacity: 0.06;
+        animation: floatWatch 6s ease-in-out infinite, fadeIn 2s 1.5s forwards;
+        cursor: none;
+        user-select: none;
+        filter: blur(0.5px);
+      }
+      .hero-watch:hover {
+        opacity: 0.25 !important;
+        filter: none;
+        cursor: none;
+      }
+
+      .scroll-hint {
+        position: absolute;
+        bottom: 2.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        opacity: 0;
+        animation: fadeIn 1s 2s forwards;
+      }
+      .scroll-hint span {
+        font-family: "Cinzel", serif;
+        font-size: 0.6rem;
+        letter-spacing: 0.4em;
+        color: var(--silver-dim);
+        text-transform: uppercase;
+      }
+      .scroll-line {
+        width: 1px;
+        height: 50px;
+        background: linear-gradient(to bottom, var(--silver-dim), transparent);
+        animation: scrollPulse 2s ease-in-out infinite;
+      }
+
+      /* ─── SECTION BASE ─── */
+      section {
+        position: relative;
+        z-index: 1;
+      }
+      .section-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+      .section-label {
+        font-family: "Cinzel", serif;
+        font-size: 0.65rem;
+        letter-spacing: 0.5em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 1rem;
+        display: block;
+      }
+      .section-title {
+        font-family: "Cinzel Decorative", serif;
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 700;
+        color: var(--silver-bright);
+        line-height: 1.15;
+        margin-bottom: 1.5rem;
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 0.9s ease, transform 0.9s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .reveal-left {
+        opacity: 0;
+        transform: translateX(-50px);
+        transition: opacity 0.9s ease, transform 0.9s ease;
+      }
+      .reveal-left.visible {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      .reveal-right {
+        opacity: 0;
+        transform: translateX(50px);
+        transition: opacity 0.9s ease, transform 0.9s ease;
+      }
+      .reveal-right.visible {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      /* ─── MARQUEE DIVIDER ─── */
+      .marquee-wrap {
+        overflow: hidden;
+        border-top: 1px solid rgba(200, 212, 232, 0.08);
+        border-bottom: 1px solid rgba(200, 212, 232, 0.08);
+        padding: 1.2rem 0;
+        background: rgba(13, 21, 48, 0.5);
+      }
+      .marquee-track {
+        display: flex;
+        gap: 3rem;
+        animation: marqueeScroll 20s linear infinite;
+        white-space: nowrap;
+      }
+      .marquee-item {
+        font-family: "Cinzel", serif;
+        font-size: 0.65rem;
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+        color: var(--silver-dim);
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+      .marquee-item::before {
+        content: "✦";
+        color: var(--gold);
+        font-size: 0.5rem;
+      }
+
+      /* ─── ABOUT ─── */
+      #about {
+        padding: 8rem 0;
+      }
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6rem;
+        align-items: center;
+      }
+      .about-visual {
+        position: relative;
+        display: flex;
+        justify-content: center;
+      }
+      .about-card {
+        background: linear-gradient(
+          145deg,
+          rgba(13, 21, 48, 0.9),
+          rgba(8, 13, 26, 0.9)
+        );
+        border: 1px solid rgba(200, 212, 232, 0.1);
+        padding: 3rem 2.5rem;
+        position: relative;
+        max-width: 380px;
+      }
+      .about-card::before {
+        content: "";
+        position: absolute;
+        top: -1px;
+        left: 2rem;
+        width: 60px;
+        height: 2px;
+        background: var(--gold);
+      }
+      .about-card::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        right: 2rem;
+        width: 60px;
+        height: 2px;
+        background: var(--silver);
+      }
+      .about-quote {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.8rem;
+        font-style: italic;
+        color: var(--silver-bright);
+        line-height: 1.5;
+        margin-bottom: 2rem;
+      }
+      .about-name {
+        font-family: "Cinzel", serif;
+        font-size: 0.7rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--gold);
+      }
+      .about-bg-text {
+        position: absolute;
+        font-family: "Cinzel Decorative", serif;
+        font-size: 8rem;
+        color: rgba(200, 212, 232, 0.02);
+        top: -2rem;
+        left: -1rem;
+        line-height: 1;
+        user-select: none;
+        pointer-events: none;
+      }
+      .about-text {
+        font-size: 1.15rem;
+        line-height: 1.9;
+        color: var(--silver-dim);
+      }
+      .about-text p + p {
+        margin-top: 1.2rem;
+      }
+      .about-text strong {
+        color: var(--silver-bright);
+        font-style: italic;
+      }
+      .about-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-top: 3rem;
+      }
+      .stat {
+        border-left: 2px solid var(--gold);
+        padding-left: 1.2rem;
+      }
+      .stat-number {
+        font-family: "Cinzel Decorative", serif;
+        font-size: 2rem;
+        color: var(--silver-bright);
+        line-height: 1;
+      }
+      .stat-label {
+        font-family: "Cinzel", serif;
+        font-size: 0.6rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--silver-dim);
+        margin-top: 0.3rem;
+      }
+
+      /* ─── WHAT I DO ─── */
+      #what {
+        padding: 8rem 0;
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          rgba(13, 21, 48, 0.4),
+          transparent
+        );
+      }
+      .what-header {
+        text-align: center;
+        margin-bottom: 5rem;
+      }
+      .what-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5px;
+        background: rgba(200, 212, 232, 0.06);
+      }
+      .what-card {
+        background: var(--midnight);
+        padding: 3rem 2.5rem;
+        transition: background 0.4s, transform 0.4s;
+        position: relative;
+        overflow: hidden;
+      }
+      .what-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          var(--gold),
+          transparent
+        );
+        transform: scaleX(0);
+        transition: transform 0.5s;
+      }
+      .what-card:hover {
+        background: rgba(13, 21, 48, 0.9);
+      }
+      .what-card:hover::before {
+        transform: scaleX(1);
+      }
+      .what-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+        display: block;
+        filter: grayscale(0.3);
+        transition: transform 0.4s;
+      }
+      .what-card:hover .what-icon {
+        transform: scale(1.15) rotate(-5deg);
+      }
+      .what-card-title {
+        font-family: "Cinzel", serif;
+        font-size: 0.85rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--silver-bright);
+        margin-bottom: 1rem;
+      }
+      .what-card-desc {
+        font-size: 1.05rem;
+        line-height: 1.8;
+        color: var(--silver-dim);
+      }
+
+      /* ─── VIDEO ─── */
+      #video {
+        padding: 8rem 0;
+      }
+      .video-header {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+      .video-container {
+        position: relative;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      .video-frame {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        border: 1px solid rgba(200, 212, 232, 0.12);
+        box-shadow: 0 0 80px rgba(30, 60, 120, 0.5),
+          0 0 150px rgba(10, 20, 50, 0.8);
+      }
+      .video-frame iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+      .video-corners::before,
+      .video-corners::after,
+      .video-corners .vc-tl::before,
+      .video-corners .vc-br::before {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        z-index: 2;
+      }
+      .video-corners {
+        position: relative;
+      }
+      .vc-tl {
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        border-top: 2px solid var(--gold);
+        border-left: 2px solid var(--gold);
+        width: 24px;
+        height: 24px;
+        z-index: 3;
+      }
+      .vc-tr {
+        position: absolute;
+        top: -2px;
+        right: -2px;
+        border-top: 2px solid var(--gold);
+        border-right: 2px solid var(--gold);
+        width: 24px;
+        height: 24px;
+        z-index: 3;
+      }
+      .vc-bl {
+        position: absolute;
+        bottom: -2px;
+        left: -2px;
+        border-bottom: 2px solid var(--gold);
+        border-left: 2px solid var(--gold);
+        width: 24px;
+        height: 24px;
+        z-index: 3;
+      }
+      .vc-br {
+        position: absolute;
+        bottom: -2px;
+        right: -2px;
+        border-bottom: 2px solid var(--gold);
+        border-right: 2px solid var(--gold);
+        width: 24px;
+        height: 24px;
+        z-index: 3;
+      }
+      .mute-btn {
+        position: absolute;
+        bottom: 1.2rem;
+        right: 1.2rem;
+        z-index: 10;
+        background: rgba(4, 7, 15, 0.85);
+        border: 1px solid rgba(200, 212, 232, 0.3);
+        color: var(--silver);
+        font-family: "Cinzel", serif;
+        font-size: 0.62rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        padding: 0.5rem 1rem;
+        cursor: none;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .mute-btn:hover {
+        background: rgba(13, 21, 48, 0.95);
+        border-color: var(--silver);
+      }
+      .mute-icon {
+        font-size: 0.9rem;
+      }
+
+      /* ─── TESTIMONIAL / TAGLINE STRIP ─── */
+      #tagline {
+        padding: 8rem 0;
+        text-align: center;
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          rgba(13, 21, 48, 0.5),
+          transparent
+        );
+      }
+      .tagline-main {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2rem, 5vw, 4rem);
+        font-weight: 300;
+        font-style: italic;
+        color: var(--silver-bright);
+        line-height: 1.4;
+        max-width: 800px;
+        margin: 0 auto 2rem;
+      }
+      .tagline-main em {
+        color: var(--gold);
+        font-style: normal;
+        font-weight: 600;
+      }
+      .tagline-line {
+        width: 60px;
+        height: 1px;
+        background: var(--gold);
+        margin: 2rem auto;
+      }
+
+      /* ─── SHOWS ─── */
+      #shows {
+        padding: 8rem 0;
+      }
+      .shows-header {
+        margin-bottom: 4rem;
+      }
+      .shows-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+      }
+      .show-item {
+        display: grid;
+        grid-template-columns: 80px 1fr auto;
+        align-items: center;
+        gap: 3rem;
+        padding: 2rem 2.5rem;
+        background: rgba(13, 21, 48, 0.2);
+        border: 1px solid rgba(200, 212, 232, 0.05);
+        transition: background 0.3s, border-color 0.3s, transform 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+      .show-item::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 0;
+        height: 100%;
+        background: rgba(13, 21, 48, 0.6);
+        transition: width 0.4s;
+      }
+      .show-item:hover {
+        border-color: rgba(200, 212, 232, 0.15);
+        transform: translateX(8px);
+      }
+      .show-item:hover::before {
+        width: 4px;
+        background: var(--gold);
+      }
+      .show-num {
+        font-family: "Cinzel Decorative", serif;
+        font-size: 2rem;
+        color: rgba(200, 212, 232, 0.12);
+        text-align: center;
+      }
+      .show-info-title {
+        font-family: "Cinzel", serif;
+        font-size: 0.9rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--silver-bright);
+        margin-bottom: 0.4rem;
+      }
+      .show-info-desc {
+        font-size: 1rem;
+        color: var(--silver-dim);
+      }
+      .show-tag {
+        font-family: "Cinzel", serif;
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+        border: 1px solid rgba(200, 168, 110, 0.3);
+        padding: 0.35rem 0.8rem;
+        white-space: nowrap;
+      }
+
+      /* ─── CONTACT ─── */
+      #contact {
+        padding: 8rem 0;
+      }
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6rem;
+        align-items: start;
+      }
+      .contact-info-block {
+      }
+      .contact-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.5rem;
+        padding: 2rem 0;
+        border-bottom: 1px solid rgba(200, 212, 232, 0.07);
+      }
+      .contact-item:first-of-type {
+        border-top: 1px solid rgba(200, 212, 232, 0.07);
+      }
+      .contact-icon {
+        font-size: 1.4rem;
+        margin-top: 0.2rem;
+        opacity: 0.7;
+      }
+      .contact-label {
+        font-family: "Cinzel", serif;
+        font-size: 0.6rem;
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 0.4rem;
+      }
+      .contact-value {
+        font-size: 1.15rem;
+        color: var(--silver-bright);
+      }
+      .contact-value a {
+        color: inherit;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      .contact-value a:hover {
+        color: var(--gold);
+      }
+      .contact-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .form-label {
+        font-family: "Cinzel", serif;
+        font-size: 0.62rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--silver-dim);
+      }
+      .form-input,
+      .form-textarea {
+        background: rgba(13, 21, 48, 0.5);
+        border: 1px solid rgba(200, 212, 232, 0.1);
+        color: var(--silver-bright);
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.1rem;
+        padding: 0.9rem 1.2rem;
+        transition: border-color 0.3s, background 0.3s;
+        outline: none;
+        resize: none;
+        cursor: none;
+      }
+      .form-input:focus,
+      .form-textarea:focus {
+        border-color: rgba(200, 212, 232, 0.35);
+        background: rgba(13, 21, 48, 0.8);
+      }
+      .form-textarea {
+        height: 120px;
+      }
+      .form-submit {
+        font-family: "Cinzel", serif;
+        font-size: 0.72rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--midnight);
+        background: linear-gradient(
+          135deg,
+          var(--silver),
+          var(--silver-bright)
+        );
+        border: none;
+        padding: 1.1rem;
+        cursor: none;
+        transition: transform 0.3s, box-shadow 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+      .form-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 25px rgba(200, 212, 232, 0.25);
+      }
+      #form-msg {
+        font-family: "Cinzel", serif;
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        color: var(--gold);
+        text-align: center;
+        min-height: 1.2rem;
+      }
+
+      /* ─── SOCIALS ─── */
+      .socials-row {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2.5rem;
+        flex-wrap: wrap;
+      }
+      .social-btn {
+        font-family: "Cinzel", serif;
+        font-size: 0.62rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--silver);
+        background: transparent;
+        border: 1px solid rgba(200, 212, 232, 0.2);
+        padding: 0.7rem 1.4rem;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        transition: all 0.3s;
+      }
+      .social-btn:hover {
+        border-color: var(--silver);
+        background: rgba(200, 212, 232, 0.06);
+        transform: translateY(-2px);
+      }
+      .social-btn svg {
+        width: 14px;
+        height: 14px;
+        fill: currentColor;
+      }
+
+      /* ─── FOOTER ─── */
+      footer {
+        position: relative;
+        z-index: 1;
+        padding: 3rem 4rem;
+        border-top: 1px solid rgba(200, 212, 232, 0.07);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .footer-copy {
+        font-family: "Cinzel", serif;
+        font-size: 0.6rem;
+        letter-spacing: 0.25em;
+        color: rgba(200, 212, 232, 0.25);
+        text-transform: uppercase;
+      }
+      .footer-name {
+        font-family: "Cinzel Decorative", serif;
+        font-size: 0.9rem;
+        color: rgba(200, 212, 232, 0.15);
+        letter-spacing: 0.1em;
+      }
+
+      /* ─── EASTER EGG MODAL ─── */
+      #egg-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(4, 7, 15, 0.92);
+        z-index: 9990;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(8px);
+      }
+      #egg-modal.open {
+        display: flex;
+        animation: fadeIn 0.4s;
+      }
+      .egg-box {
+        background: linear-gradient(
+          145deg,
+          rgba(13, 21, 48, 0.98),
+          rgba(8, 13, 26, 0.98)
+        );
+        border: 1px solid rgba(200, 212, 232, 0.15);
+        max-width: 480px;
+        width: 90%;
+        padding: 3rem;
+        text-align: center;
+        position: relative;
+      }
+      .egg-box::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 2rem;
+        right: 2rem;
+        height: 1px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          var(--gold),
+          transparent
+        );
+      }
+      .egg-icon {
+        font-size: 3rem;
+        margin-bottom: 1.5rem;
+        display: block;
+      }
+      .egg-title {
+        font-family: "Cinzel Decorative", serif;
+        font-size: 1.4rem;
+        color: var(--silver-bright);
+        margin-bottom: 1rem;
+      }
+      .egg-text {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--silver-dim);
+        font-style: italic;
+        margin-bottom: 2rem;
+      }
+      .egg-close {
+        font-family: "Cinzel", serif;
+        font-size: 0.65rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--silver-dim);
+        background: none;
+        border: 1px solid rgba(200, 212, 232, 0.2);
+        padding: 0.6rem 1.5rem;
+        cursor: none;
+        transition: all 0.3s;
+      }
+      .egg-close:hover {
+        border-color: var(--silver);
+        color: var(--silver);
+      }
+      .egg-number {
+        font-family: "Cinzel Decorative", serif;
+        font-size: 4rem;
+        color: var(--gold);
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      /* ─── PARTICLE CURSOR TRAIL ─── */
+      .trail {
+        position: fixed;
+        pointer-events: none;
+        z-index: 9997;
+        width: 4px;
+        height: 4px;
+        background: var(--silver);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        animation: trailFade 0.8s forwards;
+      }
+
+      /* ─── ANIMATIONS ─── */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes floatWatch {
+        0%,
+        100% {
+          transform: translateY(0) rotate(-8deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(8deg);
+        }
+      }
+      @keyframes scrollPulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+      @keyframes marqueeScroll {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+      @keyframes trailFade {
+        from {
+          opacity: 0.6;
+          transform: translate(-50%, -50%) scale(1);
+        }
+        to {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0);
+        }
+      }
+      @keyframes shimmer {
+        0% {
+          background-position: -200% center;
+        }
+        100% {
+          background-position: 200% center;
+        }
+      }
+
+      /* ─── MOBILE ─── */
+      @media (max-width: 900px) {
+        nav {
+          padding: 1.2rem 1.5rem;
+        }
+        nav.scrolled {
+          padding: 0.8rem 1.5rem;
+        }
+        .nav-links,
+        .nav-cta {
+          display: none;
+        }
+        .hamburger {
+          display: flex;
+        }
+        .mobile-menu {
+          position: fixed;
+          inset: 0;
+          background: rgba(4, 7, 15, 0.97);
+          z-index: 990;
+          display: none;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 2.5rem;
+        }
+        .mobile-menu.open {
+          display: flex;
+          animation: fadeIn 0.3s;
+        }
+        .mobile-menu a {
+          font-family: "Cinzel", serif;
+          font-size: 1.1rem;
+          letter-spacing: 0.3em;
+          text-transform: uppercase;
+          color: var(--silver);
+          text-decoration: none;
+        }
+        .about-grid,
+        .contact-grid {
+          grid-template-columns: 1fr;
+          gap: 3rem;
+        }
+        .what-grid {
+          grid-template-columns: 1fr;
+        }
+        footer {
+          padding: 2rem 1.5rem;
+          flex-direction: column;
+          text-align: center;
+        }
+        .hero-watch {
+          display: none;
+        }
+        .show-item {
+          grid-template-columns: 50px 1fr;
+        }
+        .show-tag {
+          display: none;
+        }
+        #hero {
+          padding: 7rem 1.5rem 4rem;
+        }
+        .section-inner {
+          padding: 0 1.5rem;
+        }
+      }
+
+      /* ─── GLITCH on hover ─── */
+      .glitch-target {
+        position: relative;
+        display: inline-block;
+      }
+      .glitch-target:hover::before,
+      .glitch-target:hover::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+      }
+      .glitch-target:hover::before {
+        color: rgba(80, 140, 255, 0.8);
+        clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+        transform: translate(-2px, -2px);
+        animation: glitch1 0.3s infinite;
+      }
+      .glitch-target:hover::after {
+        color: rgba(200, 169, 110, 0.8);
+        clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+        transform: translate(2px, 2px);
+        animation: glitch2 0.3s infinite;
+      }
+      @keyframes glitch1 {
+        0%,
+        100% {
+          transform: translate(-2px, -2px);
+        }
+        50% {
+          transform: translate(-4px, 1px);
+        }
+      }
+      @keyframes glitch2 {
+        0%,
+        100% {
+          transform: translate(2px, 2px);
+        }
+        50% {
+          transform: translate(4px, -1px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Cursor -->
+    <div id="cursor"></div>
+    <div id="cursor-ring"></div>
+
+    <!-- Stars -->
+    <canvas id="stars-canvas"></canvas>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#about" onclick="closeMobile()">About</a>
+      <a href="#what" onclick="closeMobile()">The Art</a>
+      <a href="#video" onclick="closeMobile()">Watch</a>
+      <a href="#contact" onclick="closeMobile()">Book</a>
+    </div>
+
+    <!-- Nav -->
+    <nav id="nav">
+      <a href="#hero" class="nav-logo">The <span>Mind</span></a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#what">The Art</a></li>
+        <li><a href="#video">Watch</a></li>
+        <li><a href="#shows">Shows</a></li>
+      </ul>
+      <a href="#contact" class="nav-cta">Book a Show</a>
+      <button
+        class="hamburger"
+        id="hamburger"
+        onclick="toggleMobile()"
+        aria-label="Menu"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <!-- Hero -->
+    <section id="hero">
+      <span class="hero-eyebrow">Kerala's Premier Mentalist</span>
+      <h1 class="hero-title glitch-target" data-text="THE">THE</h1>
+      <h1 class="hero-sub">MIND</h1>
+      <p class="hero-tagline">
+        <em>Mentalism</em> is the power of persuasion, the ability to read
+        thoughts<br />
+        and the art of making the impossible, possible.
+      </p>
+      <div class="hero-cta-group">
+        <a href="#video" class="btn-primary">Watch Promo</a>
+        <a href="#contact" class="btn-secondary">Book a Show</a>
+      </div>
+      <div class="hero-watch" id="heroWatch" title="Click me...">🕰️</div>
+      <div class="scroll-hint">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- Marquee -->
+    <div class="marquee-wrap">
+      <div class="marquee-track">
+        <span class="marquee-item">Thought Reading</span>
+        <span class="marquee-item">Mind Control</span>
+        <span class="marquee-item">Psychological Illusion</span>
+        <span class="marquee-item">Vinu Philipose</span>
+        <span class="marquee-item">The Mind</span>
+        <span class="marquee-item">Persuasion</span>
+        <span class="marquee-item">The Impossible Made Possible</span>
+        <span class="marquee-item">Your Secrets Are Louder Than You Think</span>
+        <!-- duplicate for seamless loop -->
+        <span class="marquee-item">Thought Reading</span>
+        <span class="marquee-item">Mind Control</span>
+        <span class="marquee-item">Psychological Illusion</span>
+        <span class="marquee-item">Vinu Philipose</span>
+        <span class="marquee-item">The Mind</span>
+        <span class="marquee-item">Persuasion</span>
+        <span class="marquee-item">The Impossible Made Possible</span>
+        <span class="marquee-item">Your Secrets Are Louder Than You Think</span>
+      </div>
+    </div>
+
+    <!-- About -->
+    <section id="about">
+      <div class="section-inner">
+        <div class="about-grid">
+          <div class="about-visual reveal-left">
+            <div class="about-bg-text">VP</div>
+            <div class="about-card">
+              <div class="about-quote">
+                "Your secrets are louder than you think."
+              </div>
+              <div class="about-name">— Vinu Philipose</div>
+            </div>
+          </div>
+          <div class="reveal-right">
+            <span class="section-label">The Mentalist</span>
+            <h2 class="section-title">Vinu Philipose</h2>
+            <div class="about-text">
+              <p>
+                An experienced <strong>HR professional from Palakkad</strong>,
+                holding a Master's degree in Personnel Management and Industrial
+                Relations from Bharathiar University, Coimbatore.
+              </p>
+              <p>
+                Over the years, Vinu has held key HR leadership positions in
+                several esteemed organizations, most recently as
+                <strong>Head of HR at United Breweries, Palakkad</strong>.
+              </p>
+              <p>
+                Beyond the boardroom, a lifelong passion for magic quietly
+                transformed into a deep, disciplined obsession with
+                <strong>the art of mentalism</strong> — performing at corporate
+                events, private shows, and stages across Kerala.
+              </p>
+            </div>
+            <div class="about-stats">
+              <div class="stat">
+                <div class="stat-number">20+</div>
+                <div class="stat-label">Years of Mastery</div>
+              </div>
+              <div class="stat">
+                <div class="stat-number">100+</div>
+                <div class="stat-label">Shows Performed</div>
+              </div>
+              <div class="stat">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Minds Read</div>
+              </div>
+              <div class="stat">
+                <div class="stat-number">1</div>
+                <div class="stat-label">Show You'll Never Forget</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- What I Do -->
+    <section id="what">
+      <div class="section-inner">
+        <div class="what-header reveal">
+          <span class="section-label">Disciplines</span>
+          <h2 class="section-title">The Art of The Mind</h2>
+        </div>
+        <div class="what-grid">
+          <div class="what-card reveal">
+            <span class="what-icon">🧠</span>
+            <div class="what-card-title">Thought Reading</div>
+            <p class="what-card-desc">
+              Vinu draws out the unspoken — names, numbers, memories held
+              silently in the minds of strangers. No tricks. No plants. Pure
+              psychology.
+            </p>
+          </div>
+          <div class="what-card reveal" style="transition-delay: 0.15s">
+            <span class="what-icon">🎩</span>
+            <div class="what-card-title">Psychological Illusion</div>
+            <p class="what-card-desc">
+              Reality bends when the mind is guided. Using influence,
+              suggestion, and misdirection, the impossible becomes the new
+              normal.
+            </p>
+          </div>
+          <div class="what-card reveal" style="transition-delay: 0.3s">
+            <span class="what-icon">🕰️</span>
+            <div class="what-card-title">Persuasion & Influence</div>
+            <p class="what-card-desc">
+              A masterclass in the power of subtle suggestion. Audiences leave
+              not just entertained — but fundamentally changed in how they see
+              free will.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Video -->
+    <section id="video">
+      <div class="section-inner">
+        <div class="video-header reveal">
+          <span class="section-label">Experience The Show</span>
+          <h2 class="section-title">Watch The Mind Live</h2>
+        </div>
+        <div class="video-container reveal">
+          <div class="video-corners">
+            <div class="vc-tl"></div>
+            <div class="vc-tr"></div>
+            <div class="vc-bl"></div>
+            <div class="vc-br"></div>
+            <div class="video-frame">
+              <!-- REPLACE src with your YouTube embed URL e.g. https://www.youtube.com/embed/YOUR_VIDEO_ID?autoplay=1&mute=1&loop=1&playlist=YOUR_VIDEO_ID -->
+              <iframe
+                id="promoVideo"
+                src="https://www.youtube.com/embed/UXbiwfXIB48?autoplay=1&mute=1&loop=1&playlist=UXbiwfXIB48&controls=1&modestbranding=1&rel=0"
+                allow="autoplay; encrypted-media"
+                allowfullscreen
+                title="Vinu Philipose – The Mind Promo"
+              >
+              </iframe>
+              <button class="mute-btn" id="muteBtn" onclick="toggleMute()">
+                <span class="mute-icon" id="muteIcon">🔇</span>
+                <span id="muteText">Unmute</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tagline -->
+    <section id="tagline">
+      <div class="section-inner">
+        <div class="reveal">
+          <div class="tagline-main">
+            "A <em>Psychological Entertainment</em> Programme<br />that will
+            leave you <em>spellbound.</em>"
+          </div>
+          <div class="tagline-line"></div>
+          <p
+            style="
+              font-family: 'Cinzel', serif;
+              font-size: 0.7rem;
+              letter-spacing: 0.4em;
+              text-transform: uppercase;
+              color: var(--silver-dim);
+            "
+          >
+            The Mind — Vinu Philipose
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Shows -->
+    <section id="shows">
+      <div class="section-inner">
+        <div class="shows-header reveal">
+          <span class="section-label">Available For</span>
+          <h2 class="section-title">Where The Mind Performs</h2>
+        </div>
+        <div class="shows-list">
+          <div class="show-item reveal">
+            <div class="show-num">01</div>
+            <div>
+              <div class="show-info-title">Corporate Events</div>
+              <div class="show-info-desc">
+                Team outings, annual days, leadership summits — a show that
+                breaks the ice and breaks the mind.
+              </div>
+            </div>
+            <div class="show-tag">High Impact</div>
+          </div>
+          <div class="show-item reveal" style="transition-delay: 0.1s">
+            <div class="show-num">02</div>
+            <div>
+              <div class="show-info-title">Private Parties & Celebrations</div>
+              <div class="show-info-desc">
+                Birthdays, anniversaries, get-togethers — make your event
+                unforgettable.
+              </div>
+            </div>
+            <div class="show-tag">Intimate</div>
+          </div>
+          <div class="show-item reveal" style="transition-delay: 0.2s">
+            <div class="show-num">03</div>
+            <div>
+              <div class="show-info-title">College & University Fests</div>
+              <div class="show-info-desc">
+                High-energy performances that captivate hundreds — and challenge
+                everything students think they know.
+              </div>
+            </div>
+            <div class="show-tag">High Energy</div>
+          </div>
+          <div class="show-item reveal" style="transition-delay: 0.3s">
+            <div class="show-num">04</div>
+            <div>
+              <div class="show-info-title">Stage Productions</div>
+              <div class="show-info-desc">
+                Full-length mentalism shows designed for larger audiences and
+                theatre settings.
+              </div>
+            </div>
+            <div class="show-tag">Grand Scale</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <div class="section-inner">
+        <div class="contact-grid">
+          <div class="reveal-left">
+            <span class="section-label">Get In Touch</span>
+            <h2 class="section-title">Book The Mind</h2>
+            <p
+              style="
+                font-size: 1.1rem;
+                line-height: 1.9;
+                color: var(--silver-dim);
+                margin-bottom: 2rem;
+              "
+            >
+              Ready to give your audience an experience they will never
+              forget?<br />Reach out to book Vinu Philipose for your next event.
+            </p>
+            <div class="contact-item">
+              <span class="contact-icon">📞</span>
+              <div>
+                <div class="contact-label">Phone</div>
+                <div class="contact-value">
+                  <a href="tel:+919946444453">+91 99464 44453</a>
+                </div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <span class="contact-icon">✉️</span>
+              <div>
+                <div class="contact-label">Email</div>
+                <div class="contact-value">
+                  <a href="mailto:vinuphilipose5@gmail.com"
+                    >vinuphilipose5@gmail.com</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <span class="contact-icon">📍</span>
+              <div>
+                <div class="contact-label">Based In</div>
+                <div class="contact-value">Palakkad, Kerala, India</div>
+              </div>
+            </div>
+            <div class="socials-row">
+              <a
+                href="https://www.instagram.com/vinuphilipose/"
+                target="_blank"
+                class="social-btn"
+              >
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                  />
+                </svg>
+                Instagram
+              </a>
+              <a
+                href="https://www.facebook.com/vinu.philipose.9"
+                target="_blank"
+                class="social-btn"
+              >
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+                  />
+                </svg>
+                Facebook
+              </a>
+              <a
+                href="https://www.youtube.com/@vinuphilipose8023"
+                target="_blank"
+                class="social-btn"
+              >
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"
+                  />
+                </svg>
+                YouTube
+              </a>
+            </div>
+          </div>
+          <div class="reveal-right">
+            <div class="contact-form">
+              <div class="form-group">
+                <label class="form-label">Your Name</label>
+                <input
+                  class="form-input"
+                  type="text"
+                  id="fname"
+                  placeholder="Enter your name"
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input
+                  class="form-input"
+                  type="email"
+                  id="femail"
+                  placeholder="your@email.com"
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Event Type</label>
+                <input
+                  class="form-input"
+                  type="text"
+                  id="fevent"
+                  placeholder="Corporate, Private, Fest…"
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Message</label>
+                <textarea
+                  class="form-textarea"
+                  id="fmsg"
+                  placeholder="Tell Vinu about your event…"
+                ></textarea>
+              </div>
+              <button class="form-submit" onclick="submitForm()">
+                Send Enquiry →
+              </button>
+              <div id="form-msg"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-copy">© 2025 Vinu Philipose. All Rights Reserved.</div>
+      <div class="footer-name">The Mind</div>
+      <div class="footer-copy">Palakkad, Kerala, India</div>
+    </footer>
+
+    <!-- Easter Egg Modal -->
+    <div id="egg-modal">
+      <div class="egg-box">
+        <span class="egg-icon">🕰️</span>
+        <div class="egg-title">You Found It.</div>
+        <div class="egg-text">
+          "Think of a number between 1 and 10.<br />Hold it firmly in your
+          mind.<br />Don't let go." <br /><br />
+          <span class="egg-number" id="eggNumber">?</span>
+          <span
+            id="eggReveal"
+            style="display: none; color: var(--silver-dim); font-size: 1rem"
+            >Was that your number?</span
+          >
+        </div>
+        <button class="egg-close" id="eggRevealBtn" onclick="revealNumber()">
+          Reveal
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // ─── CURSOR ───
+      const cursor = document.getElementById("cursor");
+      const ring = document.getElementById("cursor-ring");
+      let mx = 0,
+        my = 0;
+
+      document.addEventListener("mousemove", (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+        cursor.style.left = mx + "px";
+        cursor.style.top = my + "px";
+        // trail
+        if (Math.random() > 0.7) spawnTrail(mx, my);
+      });
+
+      let ringX = 0,
+        ringY = 0;
+      function animateRing() {
+        ringX += (mx - ringX) * 0.12;
+        ringY += (my - ringY) * 0.12;
+        ring.style.left = ringX + "px";
+        ring.style.top = ringY + "px";
+        requestAnimationFrame(animateRing);
+      }
+      animateRing();
+
+      document
+        .querySelectorAll("a, button, .what-card, .show-item")
+        .forEach((el) => {
+          el.addEventListener("mouseenter", () => {
+            ring.style.width = "56px";
+            ring.style.height = "56px";
+            ring.style.borderColor = "rgba(200,168,110,0.7)";
+          });
+          el.addEventListener("mouseleave", () => {
+            ring.style.width = "36px";
+            ring.style.height = "36px";
+            ring.style.borderColor = "rgba(200,212,232,0.5)";
+          });
+        });
+
+      function spawnTrail(x, y) {
+        const t = document.createElement("div");
+        t.className = "trail";
+        t.style.left = x + "px";
+        t.style.top = y + "px";
+        t.style.opacity = Math.random() * 0.4 + 0.1;
+        t.style.width = t.style.height = Math.random() * 4 + 2 + "px";
+        document.body.appendChild(t);
+        setTimeout(() => t.remove(), 800);
+      }
+
+      // ─── STARS ───
+      const canvas = document.getElementById("stars-canvas");
+      const ctx = canvas.getContext("2d");
+      let stars = [];
+
+      function initStars() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        stars = Array.from({ length: 200 }, () => ({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.2 + 0.2,
+          a: Math.random(),
+          speed: Math.random() * 0.005 + 0.002,
+          drift: (Math.random() - 0.5) * 0.1,
+        }));
+      }
+
+      function drawStars() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        stars.forEach((s) => {
+          s.a += s.speed;
+          s.x += s.drift;
+          if (s.x > canvas.width) s.x = 0;
+          if (s.x < 0) s.x = canvas.width;
+          const alpha = (Math.sin(s.a) * 0.5 + 0.5) * 0.8 + 0.1;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(200, 212, 232, ${alpha})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(drawStars);
+      }
+
+      initStars();
+      drawStars();
+      window.addEventListener("resize", initStars);
+
+      // Parallax stars on mouse
+      document.addEventListener("mousemove", (e) => {
+        const px = (e.clientX / window.innerWidth - 0.5) * 10;
+        const py = (e.clientY / window.innerHeight - 0.5) * 10;
+        canvas.style.transform = `translate(${px}px, ${py}px)`;
+      });
+
+      // ─── NAV SCROLL ───
+      const nav = document.getElementById("nav");
+      window.addEventListener("scroll", () => {
+        nav.classList.toggle("scrolled", window.scrollY > 60);
+      });
+
+      // ─── REVEAL ON SCROLL ───
+      const revealEls = document.querySelectorAll(
+        ".reveal, .reveal-left, .reveal-right"
+      );
+      const obs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+              obs.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+      revealEls.forEach((el) => obs.observe(el));
+
+      // ─── MOBILE MENU ───
+      function toggleMobile() {
+        document.getElementById("mobileMenu").classList.toggle("open");
+      }
+      function closeMobile() {
+        document.getElementById("mobileMenu").classList.remove("open");
+      }
+
+      // ─── MUTE / UNMUTE VIDEO ───
+      let muted = true;
+      function toggleMute() {
+        const iframe = document.getElementById("promoVideo");
+        const src = iframe.src;
+        if (muted) {
+          iframe.src = src.replace("mute=1", "mute=0");
+          document.getElementById("muteIcon").textContent = "🔊";
+          document.getElementById("muteText").textContent = "Mute";
+        } else {
+          iframe.src = src.replace("mute=0", "mute=1");
+          document.getElementById("muteIcon").textContent = "🔇";
+          document.getElementById("muteText").textContent = "Unmute";
+        }
+        muted = !muted;
+      }
+
+      // ─── FORM ───
+      function submitForm() {
+        const name = document.getElementById("fname").value.trim();
+        const email = document.getElementById("femail").value.trim();
+        const event = document.getElementById("fevent").value.trim();
+        const msg = document.getElementById("fmsg").value.trim();
+        if (!name || !email) {
+          document.getElementById("form-msg").textContent =
+            "Please enter your name and email.";
+          return;
+        }
+        const subject = encodeURIComponent("Booking Enquiry — The Mind");
+        const body = encodeURIComponent(
+          `Name: ${name}\nEmail: ${email}\nEvent: ${event}\nMessage: ${msg}`
+        );
+        window.open(
+          `mailto:vinuphilipose5@gmail.com?subject=${subject}&body=${body}`
+        );
+        document.getElementById("form-msg").textContent =
+          "✦ Your message is on its way.";
+      }
+
+      // ─── EASTER EGGS ───
+      // 1) Click the pocket watch in hero
+      document.getElementById("heroWatch").addEventListener("click", () => {
+        document.getElementById("eggNumber").textContent = "?";
+        document.getElementById("eggReveal").style.display = "none";
+        document.getElementById("eggRevealBtn").textContent = "Reveal";
+        document.getElementById("egg-modal").classList.add("open");
+      });
+
+      // 2) Secret numbers the "mind" always picks (classic mentalism: 7)
+      let secretNum = 7;
+      function revealNumber() {
+        if (document.getElementById("eggRevealBtn").textContent === "Reveal") {
+          document.getElementById("eggNumber").textContent = secretNum;
+          document.getElementById("eggReveal").style.display = "block";
+          document.getElementById("eggRevealBtn").textContent = "Close";
+        } else {
+          document.getElementById("egg-modal").classList.remove("open");
+        }
+      }
+
+      document
+        .getElementById("egg-modal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) this.classList.remove("open");
+        });
+
+      // 3) Konami code easter egg
+      let konamiSeq = [];
+      const konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+      document.addEventListener("keydown", (e) => {
+        konamiSeq.push(e.keyCode);
+        if (konamiSeq.length > 10) konamiSeq.shift();
+        if (JSON.stringify(konamiSeq) === JSON.stringify(konamiCode)) {
+          document.body.style.filter = "hue-rotate(180deg)";
+          setTimeout(() => (document.body.style.filter = ""), 2000);
+          spawnMessage("🎩 The mind sees all...");
+        }
+      });
+
+      function spawnMessage(text) {
+        const el = document.createElement("div");
+        el.style.cssText = `position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;font-family:'Cinzel Decorative',serif;font-size:2rem;color:var(--gold);text-shadow:0 0 30px rgba(200,168,110,0.8);pointer-events:none;animation:fadeUp 0.5s forwards;`;
+        el.textContent = text;
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 2500);
+      }
+
+      // 4) Triple click on THE MIND title = glitch burst
+      document.querySelector(".hero-title").addEventListener("dblclick", () => {
+        spawnMessage("Your secrets are louder than you think...");
+      });
+
+      // 5) Section label hover reveals hidden text
+      document.querySelectorAll(".section-label").forEach((el) => {
+        el.addEventListener("mouseenter", () => {
+          el.style.letterSpacing = "0.8em";
+          el.style.transition = "letter-spacing 0.4s";
+        });
+        el.addEventListener("mouseleave", () => {
+          el.style.letterSpacing = "0.5em";
+        });
+      });
+    </script>
+  </body>
+</html>
